@@ -9,7 +9,6 @@ async function hapoalimScrapper() {
     const startDate = new Date();
     // startDate.setDate(startDate.getDate() - 14);
 
-    // read documentation below for available options
     const options = {
       companyId: CompanyTypes.hapoalim,
       startDate,
