@@ -1,7 +1,7 @@
-const processFinances = require('./processFinances');
-const beinleumiScrapper = require('./scrappers/beinleumiScrapper');
-const hapoalimScrapper = require('./scrappers/hapoalimScrapper');
-const leumiScrapper = require('./scrappers/leumiScrapper');
+const processFinances = require('./src/processFinances');
+const beinleumiScrapper = require('./src/scrappers/beinleumiScrapper');
+const hapoalimScrapper = require('./src/scrappers/hapoalimScrapper');
+const leumiScrapper = require('./src/scrappers/leumiScrapper');
 
 async function main() {
   const [leumi, hapoalim, beinleumi] = await Promise.all([

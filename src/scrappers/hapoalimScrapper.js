@@ -1,5 +1,5 @@
 const { CompanyTypes, createScraper } = require('israeli-bank-scrapers');
-const config = require('../config');
+const config = require('../../config');
 const { addAlert } = require('../utils/alert');
 
 async function hapoalimScrapper() {

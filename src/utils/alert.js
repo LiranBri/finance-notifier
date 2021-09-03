@@ -11,7 +11,7 @@ const PLATFORMS = {
 const accumulatedAlerts = [];
 
 function addAlert({ msg, to = [CONTACTS.LIRAN], platforms = [PLATFORMS.EMAIL, PLATFORMS.WHATSAPP] } = {}) {
-  console.warn(msg);
+  console.warn(`\n${msg}\n`);
   accumulatedAlerts.push({ msg, to, platforms });
 }
 

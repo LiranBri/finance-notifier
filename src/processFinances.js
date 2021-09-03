@@ -1,4 +1,4 @@
-const config = require('./config');
+const config = require('../config');
 const { CONTACTS, PLATFORMS, addAlert } = require('./utils/alert');
 
 const { LIRAN, ALMOG } = CONTACTS;
@@ -47,6 +47,16 @@ function _leumiMain(financeResults) {
   if (balance < 5000) {
     addAlert({
       msg: `Leumi Main account balance is below 5000 NIS and thus at risk to become negative. balance = ${balance} NIS`,
+    });
+  }
+
+  if (balance > 20000) {
+    addAlert({
+      msg: `Leumi Main account balance is above 20,000 NIS. balance = ${balance} NIS\n
+      required actions:\n
+      1. dummy 2000 NIS payment to meet loan requirements\n
+      2. dummy payments to gain El-Al points\n
+      3. invest funds`,
     });
   }
 }
