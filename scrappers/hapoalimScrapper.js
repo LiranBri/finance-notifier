@@ -1,45 +1,104 @@
 const { CompanyTypes, createScraper } = require('israeli-bank-scrapers');
 const config = require('../config');
-
-const mock = {
-  success: true,
-  accounts: [
-    { accountNumber: '701-24346_24', balance: 1.86, txns: [] },
-    { accountNumber: '832-74392_42', balance: 500.25, txns: [Array] }, // hishtalmut
-    { accountNumber: '832-74403_63', balance: 5500.57, txns: [Array] }, // gemel
-    { accountNumber: '857-53706_04', balance: 500.93, txns: [Array] }, // main
-  ],
-};
+const { addAlert } = require('../utils/alert');
 
 async function hapoalimScrapper() {
+  return _generateMock();
+
   try {
     const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 14);
+    // startDate.setDate(startDate.getDate() - 14);
 
     // read documentation below for available options
     const options = {
-      companyId: CompanyTypes.leumi,
+      companyId: CompanyTypes.hapoalim,
       startDate,
-      combineInstallments: false,
+      combineInstallments: true,
       showBrowser: false,
     };
 
-    //   const scraper = createScraper(options);
-    //   const credentials = {
-    //       username: config.leumi.username,
-    //       password: config.leumi.password
-    //     }
-    //   const scrapeResult = await scraper.scrape(credentials);
-    const scrapeResult = mock;
+    const scraper = createScraper(options);
+    const credentials = {
+      userCode: config.hapoalim.username,
+      password: config.hapoalim.password,
+    };
+    const scrapeResult = await scraper.scrape(credentials);
 
     if (scrapeResult.success) {
       return scrapeResult;
     } else {
-      throw new Error(scrapeResult.errorType);
+      throw new Error(`${scrapeResult.errorType}: ${scrapeResult.errorMessage}`);
     }
   } catch (e) {
-    console.error(`leumi scraping failed. error: ${e.message}`);
+    addAlert({ msg: `Hapoalim scraping failed. error: ${e.message}` });
   }
+}
+
+function _generateMock() {
+  const mock = {
+    success: true,
+    accounts: [
+      {
+        accountNumber: '12-640-191944',
+        balance: 4340.45,
+        txns: [
+          {
+            type: 'normal',
+            identifier: 640191944,
+            date: '2021-08-26T21:00:00.000Z',
+            processedDate: '2021-08-26T21:00:00.000Z',
+            originalAmount: -107.57,
+            originalCurrency: 'ILS',
+            chargedAmount: -107.57,
+            description: 'הו"ק הלו\' רבית',
+            status: 'completed',
+            memo: '',
+          },
+          {
+            type: 'normal',
+            identifier: 640191944,
+            date: '2021-08-26T21:00:00.000Z',
+            processedDate: '2021-08-26T21:00:00.000Z',
+            originalAmount: -645.22,
+            originalCurrency: 'ILS',
+            chargedAmount: -645.22,
+            description: 'הו"ק הלואה קרן',
+            status: 'completed',
+            memo: '',
+          },
+          {
+            type: 'normal',
+            identifier: 90474,
+            date: '2021-08-24T21:00:00.000Z',
+            processedDate: '2021-08-24T21:00:00.000Z',
+            originalAmount: -12000.08,
+            originalCurrency: 'ILS',
+            chargedAmount: -12000.08,
+            description: 'העברה מהבנק',
+            status: 'completed',
+            memo: 'לטובת: Interactive Brokers LLC. עבור: U2036498.',
+          },
+          {
+            type: 'normal',
+            identifier: 99011330,
+            date: '2021-08-21T21:00:00.000Z',
+            processedDate: '2021-08-21T21:00:00.000Z',
+            originalAmount: 11000,
+            originalCurrency: 'ILS',
+            chargedAmount: 11000,
+            description: 'זיכוי מדיסקונט',
+            status: 'completed',
+            memo: 'המבצע: ברימר אדוארדו,בר. עבור: תשלום               מח-ן:072692563.',
+          },
+        ],
+      },
+      {
+        accountNumber: '12-510-191942',
+        txns: [],
+      },
+    ],
+  };
+  return mock;
 }
 
 module.exports = hapoalimScrapper;

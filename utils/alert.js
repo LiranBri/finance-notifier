@@ -10,9 +10,9 @@ const PLATFORMS = {
 
 const accumulatedAlerts = [];
 
-function addAlert(alertData) {
-  console.log({ alertData });
-  accumulatedAlerts.push(alertData);
+function addAlert({ msg, to = [CONTACTS.LIRAN], platforms = [PLATFORMS.EMAIL, PLATFORMS.WHATSAPP] } = {}) {
+  console.warn(msg);
+  accumulatedAlerts.push({ msg, to, platforms });
 }
 
 async function sendAlerts() {}
