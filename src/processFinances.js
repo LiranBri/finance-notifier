@@ -52,10 +52,10 @@ function _leumiMain(financeResults) {
 
   if (balance > 20000) {
     addAlert({
-      msg: `Leumi Main account balance is above 20,000 NIS. balance = ${balance} NIS\n
-      required actions:\n
-      1. dummy 2000 NIS payment to meet loan requirements\n
-      2. dummy payments to gain El-Al points\n
+      msg: `Leumi Main account balance is above 20,000 NIS. balance = ${balance} NIS
+      required actions:
+      1. dummy 2000 NIS payment to meet loan requirements
+      2. dummy payments to gain El-Al points
       3. invest funds`,
     });
   }
