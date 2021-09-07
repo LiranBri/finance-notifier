@@ -3,6 +3,8 @@ const beinleumiScrapper = require('./src/scrappers/beinleumiScrapper');
 const hapoalimScrapper = require('./src/scrappers/hapoalimScrapper');
 const leumiScrapper = require('./src/scrappers/leumiScrapper');
 
+const { sendAlerts } = require('./src/utils/alert');
+
 async function main() {
   const [leumi, hapoalim, beinleumi] = await Promise.all([
     leumiScrapper(), //
@@ -16,6 +18,7 @@ async function main() {
     beinleumi,
   };
   await processFinances(financeResults);
+  await sendAlerts();
 }
 
 main();
