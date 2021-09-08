@@ -1,0 +1,51 @@
+org: liranbri
+app: finance-notifier-scheduled-cron-app
+service: finance-notifier-scheduled-cron-app
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+# service: finance-notifier-service
+# 
+# provider:
+#   name: google
+#   stage: dev
+#   runtime: nodejs10
+#   region: us-central1
+#   project: finance-notifier
+#   # The GCF credentials can be a little tricky to set up. Luckily we've documented this for you here:
+#   # https://serverless.com/framework/docs/providers/google/guide/credentials/
+#   #
+#   # the path to the credentials file needs to be absolute
+#   credentials: ~/.gcloud/keyfile.json
+# 
+# plugins:
+#   - serverless-google-cloudfunctions
+
+package:
+  exclude:
+    - layer-node_modules
+    - node_modules
+    - .gitignore
+    - .git/**
+
+layers:
+  node-modules-layer:
+    path: nodejs/node_modules
+
+functions:
+  runFinanceNotifier:
+    handler: handler.run
+    events:
+      # Invoke Lambda function every minute
+      - schedule: rate(1 minute)
+
+# functions:
+#   runFinanceNotifier:
+#     handler: http
+#     events:
+#       - http: path
