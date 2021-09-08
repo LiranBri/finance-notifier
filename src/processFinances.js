@@ -23,7 +23,7 @@ function _leumiHishtalmut(financeResults) {
   const { balance } = leumi.accounts.find(({ accountNumber }) => accountNumber === config.leumi.accountHishtalmut);
   if (balance > 1000) {
     addAlert({
-      msg: `Leumi Hishtalmut account balance is above 1000 NIS and pending for investment. balance = ${balance} NIS`,
+      msg: `Leumi Hishtalmut account balance is above ₪ 1000 and pending for investment. balance = ₪ ${Math.round(balance).toLocaleString()}`,
     });
   }
 }
@@ -35,7 +35,7 @@ function _leumiGemel(financeResults) {
   const { balance } = leumi.accounts.find(({ accountNumber }) => accountNumber === config.leumi.accountGemel);
   if (balance > 1000) {
     addAlert({
-      msg: `Leumi Gemel account balance is above 1000 NIS and pending for investment. balance = ${balance} NIS`,
+      msg: `Leumi Gemel account balance is above ₪ 1000 and pending for investment. balance = ₪ ${Math.round(balance).toLocaleString()}`,
     });
   }
 }
@@ -47,15 +47,15 @@ function _leumiMain(financeResults) {
   const { balance } = leumi.accounts.find(({ accountNumber }) => accountNumber === config.leumi.accountMain);
   if (balance < 5000) {
     addAlert({
-      msg: `Leumi Main account balance is below 5000 NIS and thus at risk to become negative. balance = ${balance} NIS`,
+      msg: `Leumi Main account balance is below ₪ 5000 and thus at risk to become negative. balance = ₪ ${Math.round(balance).toLocaleString()}`,
     });
   }
 
   if (balance > 20000) {
     addAlert({
-      msg: `Leumi Main account balance is above 20,000 NIS. balance = ${balance} NIS
+      msg: `Leumi Main account balance is above ₪ 20,000. balance = ₪ ${Math.round(balance).toLocaleString()}
       required actions:
-      1. dummy 2000 NIS payment to meet loan requirements
+      1. dummy ₪ 2000 payment to meet loan requirements
       2. dummy payments to gain El-Al points
       3. invest funds`,
     });
@@ -69,7 +69,7 @@ function _hapoalim(financeResults) {
   const { balance } = hapoalim.accounts.find(({ accountNumber }) => accountNumber === config.hapoalim.accountMain);
   if (balance < 5000) {
     addAlert({
-      msg: `Hapoalim Main account balance is below 5000 NIS and thus at risk to become negative. balance = ${balance} NIS`,
+      msg: `Hapoalim Main account balance is below ₪ 5000 and thus at risk to become negative. balance = ₪ ${Math.round(balance).toLocaleString()}`,
     });
   }
 }
