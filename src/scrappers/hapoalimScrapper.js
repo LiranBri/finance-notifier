@@ -4,6 +4,7 @@ const { addAlert } = require('../utils/alert');
 
 async function hapoalimScrapper() {
   // return _generateMock();
+  // return
 
   try {
     const startDate = new Date();

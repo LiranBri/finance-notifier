@@ -1,7 +1,10 @@
 const axios = require('axios');
+const sgMail = require('@sendgrid/mail');
 
 const config = require('../../config');
 const { log } = require('./logger');
+
+sgMail.setApiKey(config.sendgrid.apiKey);
 
 const CONTACTS = {
   LIRAN: 'LIRAN',
@@ -53,20 +56,36 @@ function _formatWhatsappMsg(alerts) {
 }
 
 function _formatEmailMsg(alerts) {
-  return 'TODO';
+  let emailMsg = '';
+  while (true) {
+    currAlert = alerts.shift();
+    if (!currAlert) break;
+
+    const currAlertMsg = currAlert.msg + '\n\n';
+    emailMsg += currAlertMsg;
+  }
+  return emailMsg;
 }
 
 async function _sendWhatsapp(contact, text) {
   const { callmebotApiKey: apikey, phone } = config.contacts[contact];
 
   log(`sending whatsapp to ${phone} with text: ${text}`);
-  // return;
+  return;
   await axios.get(encodeURI(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${apikey}`));
 }
 
 async function _sendEmail(contact, text) {
   const { emailAddress } = config.contacts[contact];
   log(`sending email to ${emailAddress} with text: ${text}`);
+
+  const options = {
+    to: emailAddress,
+    from: 'liranbri+finance-notifier@gmail.com',
+    subject: 'Finance Alert - התרעה פיננסית',
+    text,
+  };
+  await sgMail.send(options);
 }
 
 module.exports = {

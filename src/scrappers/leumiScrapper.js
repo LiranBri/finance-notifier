@@ -3,6 +3,7 @@ const config = require('../../config');
 
 async function leumiScrapper() {
   // return _generateMock();
+  // return
 
   try {
     const startDate = new Date();

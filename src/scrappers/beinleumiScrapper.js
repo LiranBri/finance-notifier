@@ -3,6 +3,7 @@ const config = require('../../config');
 
 async function beinleumiScrapper() {
   // return _generateMock();
+  // return
 
   try {
     const startDate = new Date();
@@ -12,7 +13,7 @@ async function beinleumiScrapper() {
       companyId: CompanyTypes.beinleumi,
       startDate,
       combineInstallments: true,
-      showBrowser: true,
+      showBrowser: false,
     };
 
     const scraper = createScraper(options);
