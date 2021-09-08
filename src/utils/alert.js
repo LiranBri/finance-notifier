@@ -78,6 +78,7 @@ function _formatEmailMsg(alerts) {
 
 async function _sendWhatsapp(phone, text) {
   console.log(`sending whatsapp to ${phone} with text: ${text}`);
+  return
   // await axios.get('https://api.callmebot.com/whatsapp.php', {
   //   params: {
   //     phone,
