@@ -1,11 +1,12 @@
 const config = require('../config');
 const { CONTACTS, PLATFORMS, addAlert } = require('./utils/alert');
+const { log } = require('./utils/logger');
 
 const { LIRAN, ALMOG } = CONTACTS;
 const { WHATSAPP, EMAIL } = PLATFORMS;
 
 async function processFinances(financeResults) {
-  console.log(JSON.stringify({ financeResults }, null, 3));
+  log(JSON.stringify({ financeResults }, null, 3));
 
   _leumiGemel(financeResults);
   _leumiHishtalmut(financeResults);

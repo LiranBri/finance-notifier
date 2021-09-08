@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const config = require('../../config');
+const { log } = require('./logger');
 
 const CONTACTS = {
   LIRAN: 'LIRAN',
@@ -77,8 +78,8 @@ function _formatEmailMsg(alerts) {
 }
 
 async function _sendWhatsapp(phone, text) {
-  console.log(`sending whatsapp to ${phone} with text: ${text}`);
-  return
+  log(`sending whatsapp to ${phone} with text: ${text}`);
+  // return
   // await axios.get('https://api.callmebot.com/whatsapp.php', {
   //   params: {
   //     phone,
