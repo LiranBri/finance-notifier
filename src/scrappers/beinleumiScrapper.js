@@ -2,9 +2,7 @@ const { CompanyTypes, createScraper } = require('israeli-bank-scrapers');
 const config = require('../../config');
 
 async function beinleumiScrapper() {
-  return // skip because hebeinleumi scrapper is missing balance currently
-
-  return _generateMock();
+  // return _generateMock();
 
   try {
     const startDate = new Date();
@@ -43,6 +41,7 @@ function _generateMock() {
       {
         accountNumber: '247842',
         txns: [],
+        balance: 2000,
       },
     ],
   };

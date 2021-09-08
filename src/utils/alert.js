@@ -13,16 +13,6 @@ const PLATFORMS = {
   WHATSAPP: 'WHATSAPP',
 };
 
-const phoneNumbers = {
-  [CONTACTS.LIRAN]: '+972524587341',
-  [CONTACTS.ALMOG]: '+972524587341',
-};
-
-const emails = {
-  [CONTACTS.LIRAN]: 'liranbri@gmail.com',
-  [CONTACTS.ALMOG]: 'liranbri@gmail.com',
-};
-
 let accumulatedAlerts = [];
 
 function addAlert({ msg, to = [CONTACTS.LIRAN], platforms = [PLATFORMS.EMAIL, PLATFORMS.WHATSAPP] } = {}) {
@@ -36,24 +26,14 @@ async function sendAlerts() {
 
     const whatsappAlerts = contactAlerts.filter((alert) => alert.platforms.includes(PLATFORMS.WHATSAPP));
     if (whatsappAlerts.length) {
-      const phoneNumber = phoneNumbers[currContact];
-      if (!phoneNumber) {
-        throw new Error(`missing phone number for ${currContact}`);
-      }
-
       const whatsappMsg = _formatWhatsappMsg(whatsappAlerts);
-      await _sendWhatsapp(phoneNumber, whatsappMsg);
+      await _sendWhatsapp(currContact, whatsappMsg);
     }
 
     const emailAlerts = contactAlerts.filter((alert) => alert.platforms.includes(PLATFORMS.EMAIL));
     if (emailAlerts.length) {
-      const emailAddress = emails[currContact];
-      if (!emailAddress) {
-        throw new Error(`missing email address for ${currContact}`);
-      }
-
       const emailMsg = _formatEmailMsg(emailAlerts);
-      await _sendEmail(emailAddress, emailMsg);
+      await _sendEmail(currContact, emailMsg);
     }
   }
 
@@ -63,34 +43,31 @@ async function sendAlerts() {
 function _formatWhatsappMsg(alerts) {
   let whatsappMsg = '';
   while (true) {
-    currAlert = accumulatedAlerts.shift();
+    currAlert = alerts.shift();
     if (!currAlert) break;
 
     const currAlertMsg = currAlert.msg.replace(/\n/g, '%0A') + '%0A%0A';
-
     whatsappMsg += currAlertMsg;
   }
   return whatsappMsg;
 }
 
 function _formatEmailMsg(alerts) {
-  return 'TODO" implement _formatEmailMsg';
+  return 'TODO';
 }
 
-async function _sendWhatsapp(phone, text) {
+async function _sendWhatsapp(contact, text) {
+  const { callmebotApiKey: apikey, phone } = config.contacts[contact];
+
   log(`sending whatsapp to ${phone} with text: ${text}`);
-  // return
-  // await axios.get('https://api.callmebot.com/whatsapp.php', {
-  //   params: {
-  //     phone,
-  //     text,
-  //     apikey: config.callmebot.apikey,
-  //   },
-  // });
-  await axios.get(encodeURI(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${config.callmebot.apikey}`));
+  // return;
+  await axios.get(encodeURI(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${apikey}`));
 }
 
-async function _sendEmail() {}
+async function _sendEmail(contact, text) {
+  const { emailAddress } = config.contacts[contact];
+  log(`sending email to ${emailAddress} with text: ${text}`);
+}
 
 module.exports = {
   addAlert,

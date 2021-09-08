@@ -12,6 +12,7 @@ async function processFinances(financeResults) {
   _leumiHishtalmut(financeResults);
   _leumiMain(financeResults);
   _hapoalim(financeResults);
+  _habeinlumi(financeResults);
 }
 
 module.exports = processFinances;
@@ -47,7 +48,7 @@ function _leumiMain(financeResults) {
   const { balance } = leumi.accounts.find(({ accountNumber }) => accountNumber === config.leumi.accountMain);
   if (balance < 5000) {
     addAlert({
-      msg: `Leumi Main account balance ₪ ${Math.round(balance).toLocaleString()} is too low and at risk to turn negative.}`,
+      msg: `Leumi Main account balance ₪ ${Math.round(balance).toLocaleString()} is too low and at risk to turn negative.`,
     });
   }
 
@@ -70,7 +71,20 @@ function _hapoalim(financeResults) {
   const { balance } = hapoalim.accounts.find(({ accountNumber }) => accountNumber === config.hapoalim.accountMain);
   if (balance < 3000) {
     addAlert({
-      msg: `Hapoalim account balance ₪ ${Math.round(balance).toLocaleString()} is too low and at risk to turn negative upon next loan payment.}`,
+      msg: `Hapoalim account balance ₪ ${Math.round(balance).toLocaleString()} is too low and at risk to turn negative upon next loan payment.`,
+    });
+  }
+}
+
+function _habeinlumi(financeResults) {
+  const { beinleumi } = financeResults;
+  if (!beinleumi) return;
+
+  const { balance } = beinleumi.accounts.find(({ accountNumber }) => accountNumber === config.beinleumi.accountMain);
+  if (balance < 5000) {
+    addAlert({
+      to: [LIRAN, ALMOG],
+      msg: `Habeinleumi account balance ₪ ${Math.round(balance).toLocaleString()} is too low and at risk to turn negative.`,
     });
   }
 }
