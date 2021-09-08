@@ -29,19 +29,41 @@ async function sendAlerts() {
 
     const whatsappAlerts = contactAlerts.filter((alert) => alert.platforms.includes(PLATFORMS.WHATSAPP));
     if (whatsappAlerts.length) {
-      const whatsappMsg = _formatWhatsappMsg(whatsappAlerts);
-      await _sendWhatsapp(currContact, whatsappMsg);
+      await _sendWhatsapp(currContact, whatsappAlerts);
     }
 
     const emailAlerts = contactAlerts.filter((alert) => alert.platforms.includes(PLATFORMS.EMAIL));
     if (emailAlerts.length) {
-      const emailMsg = _formatEmailMsg(emailAlerts);
-      await _sendEmail(currContact, emailMsg);
+      await _sendEmail(currContact, emailAlerts);
     }
   }
 
   accumulatedAlerts = [];
 }
+
+async function _sendWhatsapp(contact, alerts) {
+  const { callmebotApiKey: apikey, phone } = config.contacts[contact];
+  const text = _formatWhatsappMsg(alerts);
+
+  log(`sending whatsapp to ${phone} with text: ${text}`);
+  return;
+  await axios.get(encodeURI(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${apikey}`));
+}
+
+async function _sendEmail(contact, alerts) {
+  const { emailAddress } = config.contacts[contact];
+  const text = _formatEmailMsg(alerts);
+  log(`sending email to ${emailAddress} with text: ${text}`);
+
+  const options = {
+    to: emailAddress,
+    from: 'liranbri+finance-notifier@gmail.com',
+    subject: 'Finance Alert - התרעה פיננסית',
+    text,
+  };
+  await sgMail.send(options);
+}
+
 
 function _formatWhatsappMsg(alerts) {
   let whatsappMsg = '';
@@ -65,27 +87,6 @@ function _formatEmailMsg(alerts) {
     emailMsg += currAlertMsg;
   }
   return emailMsg;
-}
-
-async function _sendWhatsapp(contact, text) {
-  const { callmebotApiKey: apikey, phone } = config.contacts[contact];
-
-  log(`sending whatsapp to ${phone} with text: ${text}`);
-  return;
-  await axios.get(encodeURI(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${apikey}`));
-}
-
-async function _sendEmail(contact, text) {
-  const { emailAddress } = config.contacts[contact];
-  log(`sending email to ${emailAddress} with text: ${text}`);
-
-  const options = {
-    to: emailAddress,
-    from: 'liranbri+finance-notifier@gmail.com',
-    subject: 'Finance Alert - התרעה פיננסית',
-    text,
-  };
-  await sgMail.send(options);
 }
 
 module.exports = {
