@@ -46,7 +46,6 @@ async function _sendWhatsapp(contact, alerts) {
   const text = _formatWhatsappMsg(alerts);
 
   log(`sending whatsapp to ${phone} with text: ${text}`);
-  return;
   await axios.get(encodeURI(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${apikey}`));
 }
 
@@ -57,7 +56,7 @@ async function _sendEmail(contact, alerts) {
 
   const options = {
     to: emailAddress,
-    from: 'liranbri+finance-notifier@gmail.com',
+    from: 'finance-notifier@liranbrimer.com',
     subject: 'Finance Alert - התרעה פיננסית',
     text,
   };
