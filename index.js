@@ -7,7 +7,7 @@ const { sendAlerts } = require('./src/utils/alert');
 const { log } = require('./src/utils/logger');
 
 async function main() {
-  log('Finance Notifer started!!');
+  log('Finance Notifier started ...');
 
   const [leumi, hapoalim, beinleumi] = await Promise.all([
     leumiScrapper(), //

@@ -3,7 +3,7 @@ const config = require('../../config');
 const { addAlert } = require('../utils/alert');
 
 async function hapoalimScrapper() {
-  // return _generateMock();
+  return _generateMock();
 
   try {
     const startDate = new Date();

@@ -87,7 +87,7 @@ async function _sendWhatsapp(phone, text) {
   //     apikey: config.callmebot.apikey,
   //   },
   // });
-  await axios.get(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${config.callmebot.apikey}`);
+  await axios.get(encodeURI(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${config.callmebot.apikey}`));
 }
 
 async function _sendEmail() {}

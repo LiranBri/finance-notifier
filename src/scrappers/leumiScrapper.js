@@ -2,7 +2,7 @@ const { CompanyTypes, createScraper } = require('israeli-bank-scrapers');
 const config = require('../../config');
 
 async function leumiScrapper() {
-  // return _generateMock();
+  return _generateMock();
 
   try {
     const startDate = new Date();

@@ -23,7 +23,7 @@ function _leumiHishtalmut(financeResults) {
   const { balance } = leumi.accounts.find(({ accountNumber }) => accountNumber === config.leumi.accountHishtalmut);
   if (balance > 1000) {
     addAlert({
-      msg: `Leumi Hishtalmut account balance is above ₪ 1000 and pending for investment. balance = ₪ ${Math.round(balance).toLocaleString()}`,
+      msg: `Leumi Hishtalmut IRA account balance ₪ ${Math.round(balance).toLocaleString()} is pending for investment.`,
     });
   }
 }
@@ -35,7 +35,7 @@ function _leumiGemel(financeResults) {
   const { balance } = leumi.accounts.find(({ accountNumber }) => accountNumber === config.leumi.accountGemel);
   if (balance > 1000) {
     addAlert({
-      msg: `Leumi Gemel account balance is above ₪ 1000 and pending for investment. balance = ₪ ${Math.round(balance).toLocaleString()}`,
+      msg: `Leumi Gemel IRA account balance ₪ ${Math.round(balance).toLocaleString()} is pending for investment.`,
     });
   }
 }
@@ -47,17 +47,18 @@ function _leumiMain(financeResults) {
   const { balance } = leumi.accounts.find(({ accountNumber }) => accountNumber === config.leumi.accountMain);
   if (balance < 5000) {
     addAlert({
-      msg: `Leumi Main account balance is below ₪ 5000 and thus at risk to become negative. balance = ₪ ${Math.round(balance).toLocaleString()}`,
+      msg: `Leumi Main account balance ₪ ${Math.round(balance).toLocaleString()} is too low and at risk to turn negative.}`,
     });
   }
 
   if (balance > 20000) {
     addAlert({
-      msg: `Leumi Main account balance is above ₪ 20,000. balance = ₪ ${Math.round(balance).toLocaleString()}
-      required actions:
-      1. dummy ₪ 2000 payment to meet loan requirements
-      2. dummy payments to gain El-Al points
-      3. invest funds`,
+      msg: `Leumi Main account balance ₪ ${Math.round(balance).toLocaleString()} is high.
+      Required actions:
+      1. transfer money via Bit to shared account
+      2. dummy ₪ 2000 payment via PayBox to meet loan requirements
+      3. dummy payments to gain El-Al points
+      4. invest leftover balance`,
     });
   }
 }
@@ -67,9 +68,9 @@ function _hapoalim(financeResults) {
   if (!hapoalim) return;
 
   const { balance } = hapoalim.accounts.find(({ accountNumber }) => accountNumber === config.hapoalim.accountMain);
-  if (balance < 5000) {
+  if (balance < 3000) {
     addAlert({
-      msg: `Hapoalim Main account balance is below ₪ 5000 and thus at risk to become negative. balance = ₪ ${Math.round(balance).toLocaleString()}`,
+      msg: `Hapoalim account balance ₪ ${Math.round(balance).toLocaleString()} is too low and at risk to turn negative upon next loan payment.}`,
     });
   }
 }
