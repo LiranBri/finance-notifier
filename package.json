@@ -10,8 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.4",
-    "eslint-config-prettier": "^8.3.0",
-    "israeli-bank-scrapers": "^1.3.2",
+    "israeli-bank-scrapers": "^1.3.2"
+  },
+  "devDependencies": {
     "prettier": "^2.3.2"
   }
 }

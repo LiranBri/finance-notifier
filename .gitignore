@@ -1,3 +1,5 @@
 node_modules
+.serverless
 
+layer-node-node_modules
 config.js
