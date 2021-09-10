@@ -15,12 +15,8 @@ async function main() {
     beinleumiScrapper(),
   ]);
 
-  financeResults = {
-    leumi,
-    hapoalim,
-    beinleumi,
-  };
-  await processFinances(financeResults);
+  const financeResults = { leumi, hapoalim, beinleumi };
+  processFinances(financeResults);
   await sendAlerts();
 }
 
