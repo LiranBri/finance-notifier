@@ -1,9 +1,9 @@
 const config = require('../config');
 const { CONTACTS, PLATFORMS, addAlert } = require('./utils/alert');
 const { log } = require('./utils/logger');
+const formatNis = require('./utils/formatNis');
 
 const { LIRAN, ALMOG } = CONTACTS;
-const { WHATSAPP, EMAIL } = PLATFORMS;
 
 function processFinances(financeResults) {
   log(JSON.stringify({ financeResults }, null, 3));
@@ -26,12 +26,12 @@ function _leumiIRA(financeResults, displayName, leumiAccountId) {
   const salaryTransaction = txns.find((txn) => txn.memo.includes('העברה מאת: הלמן'));
   if (salaryTransaction) {
     addAlert({
-      msg: `Leumi ${displayName} IRA account received a payroll of ${_formatNis(salaryTransaction.chargedAmount)} with total balance of ${_formatNis(balance)} and pending for investment.`,
+      msg: `Leumi ${displayName} IRA account received a payroll of ${formatNis(salaryTransaction.chargedAmount)} with total balance of ${formatNis(balance)} and pending for investment.`,
     });
     // positive balance alerts only on Mondays
   } else if (balance > 1000 && new Date().getDay() === 1) {
     addAlert({
-      msg: `Leumi ${displayName} IRA account balance ${_formatNis(balance)} is still high and pending for investment.`,
+      msg: `Leumi ${displayName} IRA account balance ${formatNis(balance)} is still high and pending for investment.`,
     });
   }
 }
@@ -43,7 +43,7 @@ function _leumiMain(financeResults) {
   const { balance, txns } = leumi.accounts.find(({ accountNumber }) => accountNumber === config.leumi.accountMain);
   if (balance < 5000) {
     addAlert({
-      msg: `Leumi Main account balance ${_formatNis(balance)} is too low and at risk to turn negative.`,
+      msg: `Leumi Main account balance ${formatNis(balance)} is too low and at risk to turn negative.`,
     });
   }
 
@@ -56,13 +56,13 @@ function _leumiMain(financeResults) {
   const salaryTransaction = txns.find((txn) => txn.memo.includes('משכורת'));
   if (salaryTransaction) {
     addAlert({
-      msg: `Leumi Main account received a payroll of ${_formatNis(salaryTransaction.chargedAmount)} with total balance of ${_formatNis(balance)}.
+      msg: `Leumi Main account received a payroll of ${formatNis(salaryTransaction.chargedAmount)} with total balance of ${formatNis(balance)}.
       ${requiredActionsMsg}`,
     });
     // positive balance alerts only on Mondays
   } else if (balance > 20000 && new Date().getDay() === 1) {
     addAlert({
-      msg: `Leumi Main account balance ${_formatNis(balance)} is still high.
+      msg: `Leumi Main account balance ${formatNis(balance)} is still high.
       ${requiredActionsMsg}`,
     });
   }
@@ -75,7 +75,7 @@ function _hapoalim(financeResults) {
   const { balance } = hapoalim.accounts.find(({ accountNumber }) => accountNumber === config.hapoalim.accountMain);
   if (balance < 3000) {
     addAlert({
-      msg: `Hapoalim account balance ${_formatNis(balance)} is too low and at risk to turn negative upon next loan payment.`,
+      msg: `Hapoalim account balance ${formatNis(balance)} is too low and at risk to turn negative upon next loan payment.`,
     });
   }
 }
@@ -88,11 +88,9 @@ function _beinleumi(financeResults) {
   if (balance < 5000) {
     addAlert({
       to: [LIRAN, ALMOG],
-      msg: `Habeinleumi account balance ${_formatNis(balance)} is too low and at risk to turn negative.`,
+      msg: `Habeinleumi account balance ${formatNis(balance)} is too low and at risk to turn negative.`,
     });
   }
 }
 
-function _formatNis(amount) {
-  return `₪ ${Math.round(amount).toLocaleString()}`;
-}
+

@@ -6,10 +6,9 @@ const { log } = require('./logger');
 
 sgMail.setApiKey(config.sendgrid.apiKey);
 
-const CONTACTS = {
-  LIRAN: 'LIRAN',
-  ALMOG: 'ALMOG',
-};
+const CONTACTS = Object.fromEntries(
+  Object.keys(config.contacts).map((name) => [name, name]) //
+);
 
 const PLATFORMS = {
   EMAIL: 'EMAIL',
@@ -18,7 +17,7 @@ const PLATFORMS = {
 
 let accumulatedAlerts = [];
 
-function addAlert({ msg, to = [CONTACTS.LIRAN], platforms = [PLATFORMS.EMAIL, PLATFORMS.WHATSAPP] } = {}) {
+function addAlert({ msg, to = config.defaultAlertContacts, platforms = config.defaultAlertPlatforms } = {}) {
   console.warn(`\n${msg}\n`);
   accumulatedAlerts.push({ msg, to, platforms });
 }
@@ -62,7 +61,6 @@ async function _sendEmail(contact, alerts) {
   };
   await sgMail.send(options);
 }
-
 
 function _formatWhatsappMsg(alerts) {
   let whatsappMsg = '';
