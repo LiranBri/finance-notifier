@@ -2,7 +2,6 @@ const { CompanyTypes, createScraper } = require('israeli-bank-scrapers');
 const config = require('../../config');
 
 async function beinleumiScrapper() {
-  // return _generateMock();
   // return
 
   try {
@@ -34,17 +33,3 @@ async function beinleumiScrapper() {
 }
 
 module.exports = beinleumiScrapper;
-
-function _generateMock() {
-  const mock = {
-    success: true,
-    accounts: [
-      {
-        accountNumber: '247842',
-        txns: [],
-        balance: 2000,
-      },
-    ],
-  };
-  return mock;
-}

@@ -1,4 +1,4 @@
-const processFinances = require('./src/processFinances');
+const processFinances = require('./processFinances');
 const beinleumiScrapper = require('./src/scrappers/beinleumiScrapper');
 const hapoalimScrapper = require('./src/scrappers/hapoalimScrapper');
 const leumiScrapper = require('./src/scrappers/leumiScrapper');

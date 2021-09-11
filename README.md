@@ -1,0 +1,97 @@
+# Finance Notifier
+
+## Instructions
+you are required to provide two files:
+* config.js - configurations file with banks credentials, contacts, and api keys
+* processFinances.js - custom alerts logic
+
+## API Keys
+follow the official documentations to obtain proper API keys:
+
+[SendGrid](sendgrid.com)
+
+[CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/)
+## config.js
+example:
+```js
+module.exports = {
+  leumi: {
+    username: '<username>',
+    password: '<password>',
+  },
+  hapoalim: {
+    username: '<username>',
+    password: '<password>',
+  },
+  beinleumi: {
+    username: '<username>',
+    password: '<password>',
+  },
+  contacts: {
+    LIRAN: {
+      phone: '+972000111222',
+      emailAddress: 'liran@fake-email.com',
+      callmebotApiKey: '<your CallMeBot api key>',
+    },
+    SOMEONE_ELSE: {
+      phone: '+972000111222',
+      emailAddress: 'someone@email.com',
+      callmebotApiKey: '<your CallMeBot api key>',
+    },
+  },
+  defaultAlertContacts: ['LIRAN'],
+  defaultAlertPlatforms: ['WHATSAPP', 'EMAIL'],
+  sendgrid: {
+    apiKey: '<your SendGrid api key>'
+  }
+};
+```
+
+you could of course add as much configuration as you pleased, as well as multiple contacts.
+
+## processFinances.js
+feel free to write whatever custom logic for your alerts. example:
+```js
+const config = require('./config');
+const { CONTACTS, PLATFORMS, addAlert } = require('./src/utils/alert');
+const { log } = require('./src/utils/logger');
+const formatNis = require('./src/utils/formatNis');
+
+const { LIRAN, SOMEONE } = CONTACTS;
+
+function processFinances(financeResults) {
+  log(JSON.stringify({ financeResults }, null, 3));
+
+  _leumi(financeResults);
+//   _leumiGemelIRA(financeResults);
+//   _leumiHishtalmutIRA(financeResults);
+//   _hapoalim(financeResults);
+//   _beinleumi(financeResults);
+}
+
+module.exports = processFinances;
+
+function _leumi(financeResults) {
+  const { leumi } = financeResults;
+  if (!leumi) return;
+
+  const { balance, txns } = leumi.accounts.find(({ accountNumber }) => accountNumber === config.leumi.accountMain);
+  if (balance < 5000) {
+    addAlert({
+      msg: `Leumi Main account balance ${formatNis(balance)} is too low and at risk to turn negative.`,
+    });
+  }
+
+  const salaryTransaction = txns.find((txn) => txn.memo.includes('משכורת'));
+  if (salaryTransaction) {
+    addAlert({
+      msg: `Leumi Main account received a payroll of ${formatNis(salaryTransaction.chargedAmount)} with total balance of ${formatNis(balance)}.`,
+    });
+    // positive balance alerts only on Mondays
+  } else if (balance > 10000 && new Date().getDay() === 1) {
+    addAlert({
+      msg: `Leumi Main account balance ${formatNis(balance)} is still high.`,
+    });
+  }
+}
+```
