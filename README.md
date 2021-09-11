@@ -8,7 +8,7 @@ you are required to provide two files:
 ## API Keys
 follow the official documentations to obtain proper API keys:
 
-[SendGrid](sendgrid.com)
+[SendGrid](https://www.sendgrid.com)
 
 [CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/)
 ## config.js
