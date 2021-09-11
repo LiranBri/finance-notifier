@@ -1,13 +1,13 @@
 {
   "name": "finance-notifier",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple script that crawls bank websites with the ability to send custom alerts to multiple contacts and platforms.",
+  "author": "Liran Brimer",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.4.6",
