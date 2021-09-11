@@ -95,3 +95,5 @@ function _leumi(financeResults) {
   }
 }
 ```
+
+note that `addAlert` can get optional target platforms and/or contacts arguments.
