@@ -45,7 +45,8 @@ module.exports = {
   defaultAlertContacts: ['LIRAN'],
   defaultAlertPlatforms: ['WHATSAPP', 'EMAIL'],
   sendgrid: {
-    apiKey: '<your SendGrid api key>'
+    apiKey: '<your SendGrid api key>',
+    sendFrom: '<your sender email as configured in SendGrid>'
   }
 };
 ```
