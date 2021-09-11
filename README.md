@@ -1,5 +1,5 @@
 # Finance Notifier
-A simple script which crawls bank websites with ability to send custom alerts to multiple contacts and platforms.
+A simple script that crawls bank websites with the ability to send custom alerts to multiple contacts and platforms.
 
 Crawler is based on the [Israeli Bank Scrapers](https://github.com/eshaham/israeli-bank-scrapers/) project.
 
@@ -103,10 +103,10 @@ function _leumi(financeResults) {
 }
 ```
 
-note that `addAlert` can get optional target platforms and/or contacts arguments.
+Note that `addAlert` can get optional target platforms and/or contacts arguments.
 
 ## Scheduled triggers
-follow [this guide](https://smallbusiness.chron.com/schedule-automator-tasks-mac-os-x-39132.html) to schedule automated trigger of this script.
+Follow [this guide](https://smallbusiness.chron.com/schedule-automator-tasks-mac-os-x-39132.html) to schedule an automated trigger of this script.
 
 ## Logs
 Log files are written automatically to path `~/Library/Logs/finance-notifier/`
