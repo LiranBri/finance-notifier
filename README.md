@@ -100,3 +100,6 @@ note that `addAlert` can get optional target platforms and/or contacts arguments
 
 ## Scheduled triggers
 follow [this guide](https://smallbusiness.chron.com/schedule-automator-tasks-mac-os-x-39132.html) to schedule automated trigger of this script.
+
+## Logs
+Log files are written automatically to path `~/Library/Logs/finance-notifier/`
