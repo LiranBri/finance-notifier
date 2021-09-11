@@ -58,6 +58,7 @@ const { log } = require('./src/utils/logger');
 const formatNis = require('./src/utils/formatNis');
 
 const { LIRAN, SOMEONE } = CONTACTS;
+const { WHATSAPP, EMAIL } = PLATFORMS;
 
 function processFinances(financeResults) {
   log(JSON.stringify({ financeResults }, null, 3));
@@ -90,6 +91,8 @@ function _leumi(financeResults) {
     // positive balance alerts only on Mondays
   } else if (balance > 10000 && new Date().getDay() === 1) {
     addAlert({
+      to: [LIRAN, SOMEONE],
+      platforms: [WHATSAPP, EMAIL],
       msg: `Leumi Main account balance ${formatNis(balance)} is still high.`,
     });
   }
