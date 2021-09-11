@@ -1,4 +1,7 @@
 # Finance Notifier
+A simple script which crawls bank websites with ability to send custom alerts to multiple contacts and platforms.
+
+Crawler is based on the [Israeli Bank Scrapers](https://github.com/eshaham/israeli-bank-scrapers/) project.
 
 ## Instructions
 you are required to provide two files:

@@ -55,7 +55,7 @@ async function _sendEmail(contact, alerts) {
 
   const options = {
     to: emailAddress,
-    from: 'finance-notifier@liranbrimer.com',
+    from: config.sendgrid.sendFrom,
     subject: 'Finance Alert - התרעה פיננסית',
     text,
   };
