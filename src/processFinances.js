@@ -28,8 +28,8 @@ function _leumiIRA(financeResults, displayName, leumiAccountId) {
     addAlert({
       msg: `Leumi ${displayName} IRA account received a payroll of ${_formatNis(salaryTransaction.chargedAmount)} with total balance of ${_formatNis(balance)} and pending for investment.`,
     });
-    // positive balance alerts only on Sundays
-  } else if (balance > 1000 && new Date().getDay() === 0) {
+    // positive balance alerts only on Mondays
+  } else if (balance > 1000 && new Date().getDay() === 1) {
     addAlert({
       msg: `Leumi ${displayName} IRA account balance ${_formatNis(balance)} is still high and pending for investment.`,
     });
@@ -59,8 +59,8 @@ function _leumiMain(financeResults) {
       msg: `Leumi Main account received a payroll of ${_formatNis(salaryTransaction.chargedAmount)} with total balance of ${_formatNis(balance)}.
       ${requiredActionsMsg}`,
     });
-    // positive balance alerts only on Sundays
-  } else if (balance > 20000 && new Date().getDay() === 0) {
+    // positive balance alerts only on Mondays
+  } else if (balance > 20000 && new Date().getDay() === 1) {
     addAlert({
       msg: `Leumi Main account balance ${_formatNis(balance)} is still high.
       ${requiredActionsMsg}`,
