@@ -1,22 +1,23 @@
+const config = require('./config');
 const processFinances = require('./processFinances');
-const beinleumiScrapper = require('./src/scrappers/beinleumiScrapper');
-const hapoalimScrapper = require('./src/scrappers/hapoalimScrapper');
-const leumiScrapper = require('./src/scrappers/leumiScrapper');
-
+const israeliBankScraper = require('./src/scrappers/israeliBankScraper.js');
 const { sendAlerts } = require('./src/utils/alert');
 const { log } = require('./src/utils/logger');
 
 async function main() {
   log('Finance Notifier started ...');
 
-  const [leumi, hapoalim, beinleumi] = await Promise.all([
-    leumiScrapper(), //
-    hapoalimScrapper(),
-    beinleumiScrapper(),
-  ]);
+  const banks = Object.keys(config.scrapers);
+  const promiseResults = await Promise.all(
+    banks.map((currBank) => israeliBankScraper(currBank)) //
+  );
 
-  const financeResults = { leumi, hapoalim, beinleumi };
+  const financeResults = {};
+  for (const i = 0; i < promiseResults.length; i++) {
+    financeResults[banks[i]] = promiseResults[i];
+  }
   processFinances(financeResults);
+
   await sendAlerts();
 }
 

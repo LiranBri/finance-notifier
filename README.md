@@ -18,18 +18,21 @@ follow the official documentations to obtain proper API keys:
 example:
 ```js
 module.exports = {
-  leumi: {
-    username: '<username>',
-    password: '<password>',
-  },
-  hapoalim: {
-    username: '<username>',
-    password: '<password>',
-  },
-  beinleumi: {
-    username: '<username>',
-    password: '<password>',
-  },
+  scrapers: {
+    leumi: {
+      username: '<username>',
+      password: '<password>',
+      transactionsDaysRange: 1, // Optional
+    },
+    hapoalim: {
+      username: '<username>',
+      password: '<password>',
+    },
+    beinleumi: {
+      username: '<username>',
+      password: '<password>',
+    },
+  }
   contacts: {
     LIRAN: {
       phone: '+972000111222',
