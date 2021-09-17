@@ -32,7 +32,7 @@ module.exports = {
       username: '<username>',
       password: '<password>',
     },
-  }
+  },
   contacts: {
     LIRAN: {
       phone: '+972000111222',
