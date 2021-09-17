@@ -1,6 +1,7 @@
 const { CompanyTypes, createScraper } = require('israeli-bank-scrapers');
 const config = require('../../config');
 const { addAlert } = require('../utils/alert');
+const withRetry = require('../utils/withRetry');
 
 async function hapoalimScrapper() {
   // return
@@ -33,4 +34,4 @@ async function hapoalimScrapper() {
   }
 }
 
-module.exports = hapoalimScrapper;
+module.exports = withRetry(hapoalimScrapper);
