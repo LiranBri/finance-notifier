@@ -3,7 +3,7 @@ const { log } = require('./logger');
 
 function withRetry(callback) {
   return (...args) => {
-    const operation = retry.operation({ retries: 5 });
+    const operation = retry.operation({ retries: 0 });
 
     return new Promise((resolve, reject) => {
       operation.attempt(async function (currentAttempt) {

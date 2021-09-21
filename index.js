@@ -13,7 +13,7 @@ async function main() {
   );
 
   const financeResults = {};
-  for (const i = 0; i < promiseResults.length; i++) {
+  for (let i = 0; i < promiseResults.length; i++) {
     financeResults[banks[i]] = promiseResults[i];
   }
   processFinances(financeResults);

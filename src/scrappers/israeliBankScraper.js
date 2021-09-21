@@ -14,7 +14,7 @@ async function israeliBankScraper(bank) {
 }
 
 const _scrape = withRetry(async (bank) => {
-  const { username, password, transactionsDaysRange } = config.scrapers[bank];
+  const { credentials, transactionsDaysRange } = config.scrapers[bank];
 
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - (transactionsDaysRange || 0));
@@ -23,11 +23,10 @@ const _scrape = withRetry(async (bank) => {
     companyId: bank,
     startDate,
     combineInstallments: true,
-    showBrowser: false,
+    showBrowser: true,
   };
 
   const scraper = createScraper(options);
-  const credentials = { username, password };
   const scrapeResult = await scraper.scrape(credentials);
 
   if (scrapeResult.success) {

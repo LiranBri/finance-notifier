@@ -20,17 +20,14 @@ example:
 module.exports = {
   scrapers: {
     leumi: {
-      username: '<username>',
-      password: '<password>',
+      credentials: { username: '<username>', password: '<password>' },
       transactionsDaysRange: 1, // Optional
     },
     hapoalim: {
-      username: '<username>',
-      password: '<password>',
+      credentials: { username: '<username>', password: '<password>' }
     },
     beinleumi: {
-      username: '<username>',
-      password: '<password>',
+      credentials: { username: '<username>', password: '<password>' }
     },
   },
   contacts: {
