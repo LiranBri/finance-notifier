@@ -14,7 +14,6 @@ async function israeliBankScraper(bank) {
 }
 
 const _scrape = withRetry(async (bank) => {
-  throw new Error(new Date())
   const { credentials, transactionsDaysRange } = config.scrapers[bank];
 
   const startDate = new Date();
