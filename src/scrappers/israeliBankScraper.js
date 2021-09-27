@@ -23,7 +23,7 @@ const _scrape = withRetry(async (bank) => {
     companyId: bank,
     startDate,
     combineInstallments: true,
-    showBrowser: true,
+    showBrowser: false,
   };
 
   const scraper = createScraper(options);
