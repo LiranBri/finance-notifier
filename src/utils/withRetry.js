@@ -1,9 +1,14 @@
 const retry = require('retry');
 const { log } = require('./logger');
 
+const { NO_RETRY } = process.env
+
 function withRetry(callback) {
   return (...args) => {
-    const operation = retry.operation({ retries: 6, factor: 4 });
+     // allows to run with env variable NO_RETRY=true to disable retries
+    const retries = NO_RETRY ? 0 : 6;
+    
+    const operation = retry.operation({ retries, factor: 4 });
 
     return new Promise((resolve, reject) => {
       operation.attempt(async function (currentAttempt) {

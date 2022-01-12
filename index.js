@@ -7,6 +7,7 @@ const { log } = require('./src/utils/logger');
 async function main() {
   log('Finance Notifier started ...');
 
+  // TODO: not "all or nothing". if some succeed- process those and ignore those who fails
   const banks = Object.keys(config.scrapers);
   const promiseResults = await Promise.all(
     banks.map((currBank) => israeliBankScraper(currBank)) //
