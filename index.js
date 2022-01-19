@@ -7,15 +7,17 @@ const { log } = require('./src/utils/logger');
 async function main() {
   log('Finance Notifier started ...');
 
-  // TODO: not "all or nothing". if some succeed- process those and ignore those who fails
   const banks = Object.keys(config.scrapers);
-  const promiseResults = await Promise.all(
+  const promiseResults = await Promise.allSettled(
     banks.map((currBank) => israeliBankScraper(currBank)) //
   );
 
   const financeResults = {};
   for (let i = 0; i < promiseResults.length; i++) {
-    financeResults[banks[i]] = promiseResults[i];
+    const { status, value } = promiseResults[i];
+    if (status === 'fulfilled') {
+      financeResults[banks[i]] = value;
+    }
   }
   processFinances(financeResults);
 
