@@ -13,7 +13,7 @@
     "@sendgrid/mail": "^7.4.6",
     "axios": "^0.21.4",
     "eslint-config-prettier": "^8.3.0",
-    "israeli-bank-scrapers": "^1.10.1",
+    "israeli-bank-scrapers": "^1.13.3",
     "node-log-rotate": "^0.1.5",
     "prettier": "^2.3.2",
     "retry": "^0.13.1"

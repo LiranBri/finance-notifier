@@ -7,7 +7,10 @@
       "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/index.js",
-      "runtimeExecutable": "/usr/local/bin/node"
+      "runtimeExecutable": "/usr/local/bin/node",
+      "env": {
+        "NO_RETRY": "true"
+      }
     }
   ]
 }
