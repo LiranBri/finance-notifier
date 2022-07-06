@@ -19,7 +19,7 @@ async function main() {
       financeResults[banks[i]] = value;
     }
   }
-  
+
   processFinances(financeResults);
 
   await sendAlerts();

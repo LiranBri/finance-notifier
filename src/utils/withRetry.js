@@ -6,9 +6,9 @@ const { NO_RETRY } = process.env;
 function withRetry(callback) {
   return (...args) => {
     // allows to run with env variable NO_RETRY=true to disable retries
-    const retries = NO_RETRY ? 0 : 6;
+    const retries = NO_RETRY ? 0 : 2;
 
-    const operation = retry.operation({ retries, factor: 4 });
+    const operation = retry.operation({ retries, factor: 4, minTimeout: 5000 });
 
     return new Promise((resolve, reject) => {
       operation.attempt(async function (currentAttempt) {

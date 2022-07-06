@@ -17,6 +17,9 @@ const PLATFORMS = {
 
 let accumulatedAlerts = [];
 
+// disable SSL certificate
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+
 function addAlert({ msg, to = config.defaultAlertContacts, platforms = config.defaultAlertPlatforms } = {}) {
   console.warn(`\n${msg}\n`);
   accumulatedAlerts.push({ msg, to, platforms });
@@ -45,7 +48,7 @@ async function _sendWhatsapp(contact, alerts) {
   const text = _formatWhatsappMsg(alerts);
 
   log(`sending whatsapp to ${phone} with text: ${text}`);
-  await axios.get(encodeURI(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${apikey}`));
+  await axios(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${apikey}`);
 }
 
 async function _sendEmail(contact, alerts) {
@@ -68,7 +71,9 @@ function _formatWhatsappMsg(alerts) {
     currAlert = alerts.shift();
     if (!currAlert) break;
 
-    const currAlertMsg = currAlert.msg.replace(/\n/g, '%0A') + '%0A%0A';
+    const asciNewline = '%0A';
+    const asciPlus = '%2B';
+    const currAlertMsg = encodeURI(currAlert.msg).replace(/\n/g, asciNewline).replace(/\+/g, asciPlus) + asciNewline + asciNewline;
     whatsappMsg += currAlertMsg;
   }
   return whatsappMsg;
